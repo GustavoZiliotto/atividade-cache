@@ -1,0 +1,85 @@
+@baseUrl = http://localhost:8080
+
+### Cadastre sete conteúdos (registre os IDs devolvidos)
+POST {{baseUrl}}/conteudos
+Content-Type: application/json
+
+{"titulo":"Conteúdo 1","corpo":"Corpo do conteúdo 1","autor":"Ana"}
+
+###
+POST {{baseUrl}}/conteudos
+Content-Type: application/json
+
+{"titulo":"Conteúdo 2","corpo":"Corpo do conteúdo 2","autor":"Bruno"}
+
+###
+POST {{baseUrl}}/conteudos
+Content-Type: application/json
+
+{"titulo":"Conteúdo 3","corpo":"Corpo do conteúdo 3","autor":"Caio"}
+
+###
+POST {{baseUrl}}/conteudos
+Content-Type: application/json
+
+{"titulo":"Conteúdo 4","corpo":"Corpo do conteúdo 4","autor":"Dora"}
+
+###
+POST {{baseUrl}}/conteudos
+Content-Type: application/json
+
+{"titulo":"Conteúdo 5","corpo":"Corpo do conteúdo 5","autor":"Eva"}
+
+###
+POST {{baseUrl}}/conteudos
+Content-Type: application/json
+
+{"titulo":"Conteúdo 6","corpo":"Corpo do conteúdo 6","autor":"Fábio"}
+
+###
+POST {{baseUrl}}/conteudos
+Content-Type: application/json
+
+{"titulo":"Conteúdo 7","corpo":"Corpo do conteúdo 7","autor":"Gui"}
+
+### Faça duas vezes: MISS seguido de HIT
+GET {{baseUrl}}/conteudos/1
+
+###
+GET {{baseUrl}}/conteudos/1
+
+### Faça GET dos IDs 2, 3, 4, 5 e 6 para testar o limite/LRU
+GET {{baseUrl}}/conteudos/2
+
+###
+GET {{baseUrl}}/conteudos/3
+
+###
+GET {{baseUrl}}/conteudos/4
+
+###
+GET {{baseUrl}}/conteudos/5
+
+###
+GET {{baseUrl}}/conteudos/1
+
+###
+GET {{baseUrl}}/conteudos/6
+
+### ID 2 foi removido por LRU; esta busca deve ser MISS
+GET {{baseUrl}}/conteudos/2
+
+### Atualização invalida a entrada correspondente
+PUT {{baseUrl}}/conteudos/1
+Content-Type: application/json
+
+{"titulo":"Conteúdo 1 atualizado","corpo":"Novo corpo","autor":"Ana"}
+
+###
+GET {{baseUrl}}/conteudos/1
+
+### Estatísticas e limpeza
+GET {{baseUrl}}/cache/estatisticas
+
+###
+DELETE {{baseUrl}}/cache
